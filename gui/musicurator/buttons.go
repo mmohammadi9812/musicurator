@@ -2,8 +2,8 @@ package main
 
 import (
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/widget"
 	"fyne.io/fyne/v2/dialog"
+	"fyne.io/fyne/v2/widget"
 	"log"
 )
 
@@ -13,8 +13,12 @@ var (
 			if err != nil {
 				log.Fatalf("error while openning %s\n", uri.String())
 			}
-			srcEntry.SetText(uri.String()[7:])
-			srcEntry.Refresh()
+			if uri != nil{
+				srcEntry.SetText(uri.String()[7:])
+				srcEntry.Refresh()
+				dstEntry.SetText(uri.String()[7:])
+				dstEntry.Refresh()
+			}
 		}, w)
 	})
 	dstButton = widget.NewButton("dst", func(){
@@ -22,8 +26,10 @@ var (
 			if err != nil {
 				log.Fatalf("Error occured while trying to choose destination folder")
 			}
-			dstEntry.SetText(uri.String()[7:])
-			dstEntry.Refresh()
+			if uri != nil {
+				dstEntry.SetText(uri.String()[7:])
+				dstEntry.Refresh()
+			}
 		}, w)
 	})
 
@@ -60,4 +66,6 @@ var submit = widget.NewButton("search", func(){
 	if err := tmplEntry.Validate(); err != nil {
 		dialog.ShowError(err, w)
 	}
+	checkboxWidget := createCheckBoxWidget(src)
+	mainContainer.Add(checkboxWidget)
 })

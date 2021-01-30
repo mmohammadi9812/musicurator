@@ -39,12 +39,12 @@ func main() {
 
 	files, err := core.Search(src)
 	if err != nil {
-		log.Fatal("Something happened while searching for music files:", err)
+		log.Fatal("Something happened while searching for music files: ", err)
 	}
 	for _, file := range files {
 		name, err := core.NewName(file, template)
 		if err != nil {
-			log.Fatal("Something happened while searching for music files:", err)
+			log.Fatal("Something happened while trying to rename file based on template:", err)
 		}
 		if dryRun {
 			fmt.Printf("%v %s -> %s\n", emoji.MusicalScore, file.Name, name)

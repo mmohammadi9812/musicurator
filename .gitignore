@@ -18,3 +18,4 @@
 build/
 testdata/
 .idea/
+testoutput/

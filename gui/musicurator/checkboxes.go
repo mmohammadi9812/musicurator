@@ -17,11 +17,14 @@ var (
 
 func createCheckBox(file core.Music) *widget.Check {
 	oldName := file.Name
+	fmt.Printf("DEBUG: tmpl: `%s` src: `%s` dst: `%s`\n", tmpl, src, dst)
 	newName, err := core.NewName(file, tmpl)
 	if err != nil {
 		dialog.ShowError(err, w)
 	}
-	checkBox := widget.NewCheck(fmt.Sprintf("%s -> %s", oldName, newName), func(changed bool) {})
+	checkBox := widget.NewCheck(fmt.Sprintf("%s -> %s", oldName, newName), func(changed bool) {
+
+	})
 	checkBox.Bind(chosedFiles[file])
 	return checkBox
 }
@@ -43,11 +46,12 @@ func createCheckBoxWidget(path string) *fyne.Container {
 	}
 	selectAll := selectAllCheckBox()
 	checkBoxWidget := container.NewVBox(selectAll)
+	fmt.Printf("DEBUG: len(files): %d\n", len(files))
 	for _, file := range files {
+		chosedFiles[file] = binding.NewBool()
 		checkBox := createCheckBox(file)
 		checkBoxes = append(checkBoxes, checkBox)
-		chosedFiles[file] = binding.NewBool()
-		checkBoxWidget.Add(checkBoxWidget)
+		checkBoxWidget.Add(checkBox)
 	}
 	return checkBoxWidget
 }

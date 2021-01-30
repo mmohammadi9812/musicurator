@@ -9,7 +9,7 @@ func NewName(file Music, template string) (name string, err error) {
 		artistRegex = regexp.MustCompile("\\$artist")
 		albumRegex = regexp.MustCompile("\\$album")
 		titleRegex = regexp.MustCompile("\\$title")
-		extRegex = regexp.MustCompile("\\$ext")
+		extRegex = regexp.MustCompile("\\.\\$ext")
 	)
 	artist, err := file.Artist()
 	if err != nil {

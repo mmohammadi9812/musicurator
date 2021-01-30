@@ -9,11 +9,11 @@ func isMusicFile(path string) bool {
 	extension := filepath.Ext(path)
 	switch extension {
 		case
-			"mp3",
-			"m4a",
-			"flac",
-			"aac",
-			"opus":
+			".mp3",
+			".m4a",
+			".flac",
+			".aac",
+			".opus":
 				return true
 	}
 	return false

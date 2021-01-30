@@ -5,6 +5,7 @@ import (
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
+	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
@@ -42,6 +43,10 @@ func main() {
 
 	tmplEntry.OnChanged = func(s string){
 		tmplEntry.SetText(removeExtTempl(tmplEntry.Text) + ".$ext")
+		err := tmplString.Set(removeExtTempl(tmplEntry.Text) + ".$ext")
+		if err != nil {
+			dialog.ShowError(err, w)
+		}
 	}
 	tmplEntry.Refresh()
 
