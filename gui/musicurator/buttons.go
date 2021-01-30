@@ -26,12 +26,38 @@ var (
 			dstEntry.Refresh()
 		}, w)
 	})
-	submit = widget.NewButton("search", func(){
-		if err := srcEntry.Validate(); err != nil {
-			dialog.ShowError(err, w)
-		}
-		if err := dstEntry.Validate(); err != nil {
-			dialog.ShowError(err, w)
-		}
+
+)
+
+var (
+	artistButton = widget.NewButton("artist name", func(){
+		tmplEntry.SetText(removeExtTempl(tmplEntry.Text) + "$artist")
+	})
+	titleButton = widget.NewButton("title of song", func(){
+		tmplEntry.SetText(removeExtTempl(tmplEntry.Text) + "$title")
+	})
+	albumButton = widget.NewButton("album name", func(){
+		tmplEntry.SetText(removeExtTempl(tmplEntry.Text) + "$album")
+	})
+	dashButton = widget.NewButton("-", func(){
+		tmplEntry.SetText(removeExtTempl(tmplEntry.Text) + "-")
+	})
+	underscoreButton = widget.NewButton("_", func() {
+		tmplEntry.SetText(removeExtTempl(tmplEntry.Text) + "_")
+	})
+	spaceButton = widget.NewButton("SPACE", func() {
+		tmplEntry.SetText(removeExtTempl(tmplEntry.Text) + " ")
 	})
 )
+
+var submit = widget.NewButton("search", func(){
+	if err := srcEntry.Validate(); err != nil {
+		dialog.ShowError(err, w)
+	}
+	if err := dstEntry.Validate(); err != nil {
+		dialog.ShowError(err, w)
+	}
+	if err := tmplEntry.Validate(); err != nil {
+		dialog.ShowError(err, w)
+	}
+})

@@ -13,7 +13,9 @@ var (
 	mainContainer *fyne.Container
 	srcEntry *widget.Entry
 	dstEntry *widget.Entry
+	tmplEntry *widget.Entry
 	w fyne.Window
+	src, dst, tmpl string
 )
 
 func main() {
@@ -24,24 +26,36 @@ func main() {
 		Height: 600,
 	})
 	w.SetFixedSize(true)
-	srcPath := binding.NewString()
-	dstPath := binding.NewString()
-	tmplString := binding.NewString()
+	//srcPath := binding.NewString()
+	//dstPath := binding.NewString()
+	//tmplString := binding.NewString()
+	srcPath := binding.BindString(&src)
+	dstPath := binding.BindString(&dst)
+	tmplString := binding.BindString(&tmpl)
 	srcEntry = widget.NewEntryWithData(srcPath)
 	dstEntry = widget.NewEntryWithData(dstPath)
-	tmplEntry := widget.NewEntryWithData(tmplString)
+	tmplEntry = widget.NewEntryWithData(tmplString)
 
 	srcEntry.Validator = pathValidator
 	dstEntry.Validator = pathValidator
 	tmplEntry.Validator = tmplValidator
 
+	tmplEntry.OnChanged = func(s string){
+		tmplEntry.SetText(removeExtTempl(tmplEntry.Text) + ".$ext")
+	}
+	tmplEntry.Refresh()
+
 	srcContainer := container.New(layout.NewFormLayout(), srcButton, srcEntry)
 	dstContainer := container.New(layout.NewFormLayout(), dstButton, dstEntry)
+	tmplContainer := container.NewVBox(
+		container.NewHBox(titleButton, artistButton, albumButton, dashButton, underscoreButton, spaceButton),
+		tmplEntry,
+	)
 
 	mainContainer = container.NewVBox(
 		srcContainer,
 		dstContainer,
-		tmplEntry,
+		tmplContainer,
 		submit,
 	)
 	w.SetContent(mainContainer)
