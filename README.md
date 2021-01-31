@@ -5,7 +5,8 @@ Musicurator searches your computer for music files and tries to use id3 tags to 
 better searches through files. If you've worked with downloaded mp3 files, you may have seen odd filenames like:  
 `000_will_tay.mp3`  
 It's hard to search for willow song from taylor swift with names like this.  
-So with `musicurator` you can fix this to: `taylor_swift__willow.mp3`  
+So with `musicurator` you can fix this to:  
+`taylor_swift__willow.mp3`
 ### Installing
 executable files for linux and windows can be found in `release` tab of mirrored github page  
 
@@ -22,8 +23,7 @@ folders are structured like this:
 + **./gui/**: package for gui app
 
 please *NOTE* that cmd binaries and gui app do the same thing and are totally independent
-You may use which 
 
 ### LICENSE
-This repo is licensed under BSD 3-Clause License
+This repo is licensed under BSD 3-Clause License  
 you can find it in `LICENSE` file
