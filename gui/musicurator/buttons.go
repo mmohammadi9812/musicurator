@@ -5,6 +5,7 @@ import (
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
 	"log"
+	"regexp"
 )
 
 var (
@@ -54,18 +55,30 @@ var (
 	spaceButton = widget.NewButton("SPACE", func() {
 		tmplEntry.SetText(removeExtTempl(tmplEntry.Text) + " ")
 	})
+	removeButton = widget.NewButton("<-", func(){
+		lastPartOfTmplRegex := regexp.MustCompile("(\\$artist|\\$album|\\$name|\\$title|[ _-])$")
+		newTemplate := lastPartOfTmplRegex.ReplaceAllString(removeExtTempl(tmplEntry.Text), "")
+		tmplEntry.SetText(newTemplate + ".$ext")
+	})
 )
 
-var submit = widget.NewButton("search", func(){
-	if err := srcEntry.Validate(); err != nil {
-		dialog.ShowError(err, w)
-	}
-	if err := dstEntry.Validate(); err != nil {
-		dialog.ShowError(err, w)
-	}
-	if err := tmplEntry.Validate(); err != nil {
-		dialog.ShowError(err, w)
-	}
-	checkboxWidget := createCheckBoxWidget(src)
-	mainContainer.Add(checkboxWidget)
-})
+var (
+	submitWidget *fyne.Container
+	submitButton = widget.NewButton("submit", submitFunc)
+	searchButton = widget.NewButton("search", func(){
+		if err := srcEntry.Validate(); err != nil {
+			dialog.ShowError(err, w)
+		}
+		if err := tmplEntry.Validate(); err != nil {
+			dialog.ShowError(err, w)
+		}
+		if len(submitWidget.Objects) == 1 {
+			submitWidget.Add(submitButton)
+		}
+		checkboxWidget := createCheckBoxWidget(src)
+		if len(mainContainer.Objects) > 4 {
+			mainContainer.Remove(mainContainer.Objects[len(mainContainer.Objects) - 1])
+		}
+		mainContainer.Add(checkboxWidget)
+	})
+)

@@ -21,3 +21,8 @@ run-gui: gui
 
 test-cmd: cmd
 	./build/musicurator-cli.exe -n -s "C:\Users\Mohammad\Documents\Code\GO\musicurator\testdata" -d "C:\Users\Mohammad\Documents\Code\GO\musicurator\testoutput" -t '$$artist - $$title.$$ext'
+
+.PHONY: testdata
+testdata:
+	rm ./testdata/dst/*
+	cp -t ./testdata/src/ ./testdata/src.bak/*

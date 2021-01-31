@@ -23,13 +23,10 @@ func main() {
 	a := app.New()
 	w = a.NewWindow("Musicurator")
 	w.Resize(fyne.Size{
-		Width:  800,
-		Height: 600,
+		Width:  950,
+		Height: 650,
 	})
 	w.SetFixedSize(true)
-	//srcPath := binding.NewString()
-	//dstPath := binding.NewString()
-	//tmplString := binding.NewString()
 	srcPath := binding.BindString(&src)
 	dstPath := binding.BindString(&dst)
 	tmplString := binding.BindString(&tmpl)
@@ -38,7 +35,6 @@ func main() {
 	tmplEntry = widget.NewEntryWithData(tmplString)
 
 	srcEntry.Validator = pathValidator
-	dstEntry.Validator = pathValidator
 	tmplEntry.Validator = tmplValidator
 
 	tmplEntry.OnChanged = func(s string){
@@ -53,15 +49,18 @@ func main() {
 	srcContainer := container.New(layout.NewFormLayout(), srcButton, srcEntry)
 	dstContainer := container.New(layout.NewFormLayout(), dstButton, dstEntry)
 	tmplContainer := container.NewVBox(
-		container.NewHBox(titleButton, artistButton, albumButton, dashButton, underscoreButton, spaceButton),
+		container.NewHBox(titleButton, artistButton, albumButton, dashButton, underscoreButton, spaceButton, removeButton),
 		tmplEntry,
 	)
+
+	submitWidget = container.NewHBox()
+	submitWidget.Add(searchButton)
 
 	mainContainer = container.NewVBox(
 		srcContainer,
 		dstContainer,
 		tmplContainer,
-		submit,
+		submitWidget,
 	)
 	w.SetContent(mainContainer)
 	w.ShowAndRun()

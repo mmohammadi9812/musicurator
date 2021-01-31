@@ -12,12 +12,11 @@ import (
 
 var (
 	chosedFiles = make(map[core.Music]binding.Bool)
-	checkBoxes []*widget.Check
+	newNames = make(map[core.Music]string)
 )
 
 func createCheckBox(file core.Music) *widget.Check {
 	oldName := file.Name
-	fmt.Printf("DEBUG: tmpl: `%s` src: `%s` dst: `%s`\n", tmpl, src, dst)
 	newName, err := core.NewName(file, tmpl)
 	if err != nil {
 		dialog.ShowError(err, w)
@@ -25,14 +24,16 @@ func createCheckBox(file core.Music) *widget.Check {
 	checkBox := widget.NewCheck(fmt.Sprintf("%s -> %s", oldName, newName), func(changed bool) {
 
 	})
+	newNames[file] = newName
+	checkBox.SetChecked(true)
 	checkBox.Bind(chosedFiles[file])
 	return checkBox
 }
 
 func selectAllCheckBox() (out *widget.Check) {
 	out = widget.NewCheck("select all", func(b bool) {
-		for _, check := range checkBoxes {
-			check.Checked = b
+		for _, check := range chosedFiles {
+			_ = check.Set(b)
 		}
 	})
 	out.Checked = true
@@ -46,11 +47,10 @@ func createCheckBoxWidget(path string) *fyne.Container {
 	}
 	selectAll := selectAllCheckBox()
 	checkBoxWidget := container.NewVBox(selectAll)
-	fmt.Printf("DEBUG: len(files): %d\n", len(files))
 	for _, file := range files {
 		chosedFiles[file] = binding.NewBool()
+		chosedFiles[file].Set(true)
 		checkBox := createCheckBox(file)
-		checkBoxes = append(checkBoxes, checkBox)
 		checkBoxWidget.Add(checkBox)
 	}
 	return checkBoxWidget
