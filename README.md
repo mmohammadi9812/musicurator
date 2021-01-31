@@ -13,10 +13,17 @@ alternatively, you may build command-line tool with:
 ```bash
 git clone github.com/mmohammadi9812/musicurator
 cd musicurator
-go build ./cmd/musicurator/
+go build ./gui/musicurator/ # or ./cmd/musicurator/ if you want the cmd binaries
 ```
 ### Structure
 folders are structured like this:  
 + **./core/**: core files to app, which includes search and renaming functionality
 + **./cmd/**: package for cmd tool
-+ **./gui/**:
++ **./gui/**: package for gui app
+
+please *NOTE* that cmd binaries and gui app do the same thing and are totally independent
+You may use which 
+
+### LICENSE
+This repo is licensed under BSD 3-Clause License
+you can find it in `LICENSE` file

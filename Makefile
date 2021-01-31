@@ -4,11 +4,14 @@ corefiles := $(wildcard ./core/*)
 
 all: cmd gui
 
-build/musicurator-cli.exe: $(corefiles) $(clifiles)
+build:
+	mkdir -p build
+
+build/musicurator-cli.exe: $(corefiles) $(clifiles) build
 	go build -o build/musicurator-cli.exe ./cmd/musicurator/
 
-build/musicurator-gui.exe: $(corefiles) $(guifiles)
-	go build -o build/musicurator-gui.exe ./gui/musicurator/
+build/musicurator-gui.exe: $(corefiles) $(guifiles) build
+	go build -ldflags "-H=windowsgui" -o build/musicurator-gui.exe ./gui/musicurator/
 
 .PHONY: cmd
 cmd: build/musicurator-cli.exe
@@ -26,3 +29,7 @@ test-cmd: cmd
 testdata:
 	rm ./testdata/dst/*
 	cp -t ./testdata/src/ ./testdata/src.bak/*
+
+.PHONY: package-windows
+package-windows: gui
+	fyne package -os windows -icon ./build/cassette.png -release -sourceDir ./gui/musicurator/ -executable ./build/musicurator-gui.exe
