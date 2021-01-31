@@ -25,5 +25,5 @@ folders are structured like this:
 please *NOTE* that cmd binaries and gui app do the same thing and are totally independent
 
 ### LICENSE
-This repo is licensed under BSD 3-Clause License  
+This repo is licensed under BSD 3-Clause License    
 you can find it in `LICENSE` file

@@ -1,0 +1,9 @@
+repository:
+  name: musicurator
+  description: this repo is a mirror of https://git.sr.ht/~mmohammadi9812/musicurator/
+  topics: go, golang, gui, id3
+  private: false
+  has_issues: true
+  has_projects: false
+  has_wiki: false
+  default_branch: master
